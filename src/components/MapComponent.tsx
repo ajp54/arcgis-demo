@@ -15,7 +15,7 @@ type Handle = { remove(): void };
 
 interface MapComponentProps {
   onMapReady: (view: MapView, homeValueLayer: Layer | null, incomeLayer: Layer | null) => void;
-  onLocationClick: (data: LocationData | null) => void;
+  onLocationClick?: (data: LocationData | null) => void;
   onError: (message: string) => void;
 }
 
@@ -115,7 +115,7 @@ export default function MapComponent({ onMapReady, onLocationClick, onError }: M
               ? Math.round((medianHomeValue / medianIncome) * 10) / 10
               : null;
 
-          onLocationClick({
+          onLocationClick?.({
             areaName,
             medianHomeValue,
             medianIncome,
@@ -128,7 +128,7 @@ export default function MapComponent({ onMapReady, onLocationClick, onError }: M
       // Clear the inspector when the popup is dismissed
       visibleHandle = watch(
         () => view.popup?.visible,
-        (visible) => { if (!visible) onLocationClick(null); }
+        (visible) => { if (!visible) onLocationClick?.(null); }
       );
     });
 

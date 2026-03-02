@@ -4,9 +4,6 @@ import type MapView from "@arcgis/core/views/MapView";
 import type Layer from "@arcgis/core/layers/Layer";
 import MapComponent from "./components/MapComponent";
 import LayerControls from "./components/LayerControls";
-// import NeighborhoodInspector from "./components/NeighborhoodInspector";
-// import InsightPanel from "./components/InsightPanel";
-import type { LocationData } from "./utils/dataUtils";
 import "./styles/App.css";
 
 type LayerKey = "homeValue" | "income";
@@ -29,33 +26,15 @@ export default function App() {
     income:    true,
   });
 
-  // ── Inspector ─────────────────────────────────────────────────────────────
-  const [inspectorData, setInspectorData] = useState<LocationData | null>(null);
-
-  // ── Right-panel tab: "inspector" | "insights" ────────────────────────────
-  const [activeTab, setActiveTab] = useState<"inspector" | "insights">("inspector");
-
-  // Keep a stable reference to layers for the InsightPanel
-  const [layers, setLayers] = useState<{ homeValue: Layer | null; income: Layer | null }>({
-    homeValue: null,
-    income: null,
-  });
-
   // ── Callbacks ─────────────────────────────────────────────────────────────
   const handleMapReady = useCallback(
-    (view: MapView, homeValueLayer: Layer | null, incomeLayer: Layer | null) => {
+    (_view: MapView, homeValueLayer: Layer | null, incomeLayer: Layer | null) => {
       homeValueLayerRef.current = homeValueLayer;
       incomeLayerRef.current    = incomeLayer;
-      setLayers({ homeValue: homeValueLayer, income: incomeLayer });
       setMapReady(true);
     },
     []
   );
-
-  const handleLocationClick = useCallback((data: LocationData | null) => {
-    setInspectorData(data);
-    if (data) setActiveTab("inspector");
-  }, []);
 
   const handleError = useCallback((message: string) => {
     setMapError(message);
@@ -85,7 +64,6 @@ export default function App() {
       {/* ── Full-screen ArcGIS Map ─────────────────────────────────────── */}
       <MapComponent
         onMapReady={handleMapReady}
-        onLocationClick={handleLocationClick}
         onError={handleError}
       />
 
@@ -130,46 +108,12 @@ export default function App() {
         </div>
       )}
 
-      {/* ── Left Panel: Layer Controls ────────────────────────────────── */}
+      {/* ── Layer Controls ────────────────────────────────────────────── */}
       <LayerControls
         layers={layerVisibility}
         onToggle={toggleLayer}
         mapReady={mapReady}
       />
-
-      {/* ── Right Panel: Inspector + Insights ────────────────────────── */}
-      {/* <aside className="right-panel">
-
-        <div className="tab-bar">
-          <button
-            className={`tab-btn ${activeTab === "inspector" ? "tab-btn--active" : ""}`}
-            onClick={() => setActiveTab("inspector")}
-          >
-            <MapPin size={13} />
-            Inspector
-          </button>
-          <button
-            className={`tab-btn ${activeTab === "insights" ? "tab-btn--active" : ""}`}
-            onClick={() => setActiveTab("insights")}
-          >
-            <Activity size={13} />
-            Insights
-          </button>
-        </div>
-
-        <div className="right-panel-body">
-          {activeTab === "inspector" && (
-            <NeighborhoodInspector data={inspectorData} />
-          )}
-          {activeTab === "insights" && (
-            <InsightPanel
-              homeValueLayer={layers.homeValue}
-              incomeLayer={layers.income}
-              mapReady={mapReady}
-            />
-          )}
-        </div>
-      </aside> */}
     </div>
   );
 }
