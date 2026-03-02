@@ -233,3 +233,11 @@
   background: var(--border-color);
   border-radius: 2px;
 }
+
+/* ── Mobile header tweaks ─────────────────────────────────── */
+@media (max-width: 768px) {
+  .header-subtitle,
+  .header-hint {
+    display: none;
+  }
+}

@@ -1,7 +1,7 @@
 import { MapPin, Home, TrendingUp, BarChart2, MousePointer } from "lucide-react";
 import { formatCurrency, getAffordabilityRating } from "../utils/dataUtils";
 import type { LocationData } from "../utils/dataUtils";
-import "./NeighborhoodInspector.css";
+import "../styles/NeighborhoodInspector.css";
 
 /**
  * NeighborhoodInspector

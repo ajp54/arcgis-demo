@@ -7,7 +7,7 @@ import LayerControls from "./components/LayerControls";
 // import NeighborhoodInspector from "./components/NeighborhoodInspector";
 // import InsightPanel from "./components/InsightPanel";
 import type { LocationData } from "./utils/dataUtils";
-import "./App.css";
+import "./styles/App.css";
 
 type LayerKey = "homeValue" | "income";
 

@@ -9,7 +9,7 @@ import {
 } from "../utils/dataUtils";
 import type { AreaData } from "../utils/dataUtils";
 import { FIELD_NAMES } from "../config/arcgis";
-import "./InsightPanel.css";
+import "../styles/InsightPanel.css";
 
 /**
  * InsightPanel
