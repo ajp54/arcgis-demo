@@ -1,13 +1,99 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* =============================================================
+   Global Design Tokens & Reset
+   Dark glassmorphism theme for SafeHaven
+============================================================= */
+
+:root {
+  /* ── Colour palette ── */
+  --color-accent:  #6c63ff;   /* purple — brand / interactive */
+  --color-safe:    #00d4aa;   /* teal-green — affordable */
+  --color-gold:    #fbbf24;   /* amber — home value */
+  --color-income:  #34d399;   /* emerald-green — income */
+  --color-danger:  #ef4444;   /* red — unaffordable */
+
+  /* ── Backgrounds ── */
+  --panel-bg:      rgba(13, 17, 27, 0.82);
+  --surface:       rgba(255, 255, 255, 0.05);
+  --surface-hover: rgba(255, 255, 255, 0.08);
+
+  /* ── Borders ── */
+  --border-color:  rgba(255, 255, 255, 0.10);
+
+  /* ── Typography ── */
+  --text-primary:   #f0f4f8;
+  --text-secondary: #a0aec0;
+  --text-muted:     #64748b;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* ── Reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #0d1117;
+  color: var(--text-primary);
+}
+
+/* ── Scrollbar (global slim style) ─────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 2px;
+}
+
+/* ── Focus ring ─────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ── ArcGIS map container fills parent ──────────────────────── */
+.esri-view {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ── Override ArcGIS UI chrome to match dark theme ─────────── */
+.esri-ui-corner {
+  /* push default ArcGIS zoom controls below our header */
+  margin-top: 64px !important;
+}
+
+.esri-zoom .esri-widget--button,
+.esri-compass .esri-widget--button {
+  background: var(--panel-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.esri-zoom .esri-widget--button:hover,
+.esri-compass .esri-widget--button:hover {
+  background: var(--surface-hover) !important;
 }
