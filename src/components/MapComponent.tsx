@@ -26,6 +26,10 @@ export default function MapComponent({ onMapReady, onLocationClick, onError }: M
   useEffect(() => {
     if (!containerRef.current) return;
 
+    // StrictMode mounts twice in dev — ignore callbacks from the first
+    // (destroyed) instance so it doesn't surface a false error.
+    let active = true;
+
     // Handles declared here so the cleanup closure can remove them
     let featuresHandle: Handle | null = null;
     let visibleHandle: Handle | null  = null;
@@ -45,6 +49,8 @@ export default function MapComponent({ onMapReady, onLocationClick, onError }: M
     viewRef.current = view;
 
     view.when(() => {
+      if (!active) return;
+
       const homeValueLayer = webmap.allLayers.find(
         (l) => l.title === ARCGIS_CONFIG.homeValueLayerTitle
       ) ?? null;
@@ -130,9 +136,14 @@ export default function MapComponent({ onMapReady, onLocationClick, onError }: M
         () => view.popup?.visible,
         (visible) => { if (!visible) onLocationClick?.(null); }
       );
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }, (err: any) => {
+      if (!active) return;
+      onError(`Map failed to load: ${err?.message ?? String(err)}`);
     });
 
     return () => {
+      active = false;
       featuresHandle?.remove();
       visibleHandle?.remove();
       if (viewRef.current) {
