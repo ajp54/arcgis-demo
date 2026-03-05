@@ -29,8 +29,8 @@ export interface FieldNames {
 }
 
 export const ARCGIS_CONFIG: ArcGISConfig = {
-  apiKey:   "AAPTahvoZcAZWf__fxt4fuB-W4Q..N_5wpbwBS3Jqxq3lnrZGgxfwwD7LSP-tz_aPoqyEpvFEJSBijnc66-CmonFwHU9rFdr2goqYhblupbzQ5cglKnWdyrrEsg2lu_eagoLLmLkjcbfws6gtzvxCnr-eRJJNNqIejbr6C-0YPcXC7mpO74jaXwWQnh3XaFp538i22YJZqSkX8F79Z1Xnr0N1dNyYHQMp2obpE-d1x5AkzVn95Kp1x5SKJvSo3cJzJkII-ShItXJZaX9YUV91Kd6lA3i3GR7ti3ofAT1_PnmpWZgl",
-  webMapId: "92ce453d713442aeab4caa3bd9aec1e1",
+  apiKey:   process.env.REACT_APP_ARCGIS_API_KEY  ?? "",
+  webMapId: process.env.REACT_APP_WEBMAP_ID        ?? "",
 
   // Exact layer titles as they appear inside your Web Map.
   // Check: ArcGIS Online → Open Map → Layers panel.
